@@ -37,19 +37,9 @@ services:
       retries: 5
       start_period: 60s
   
-  pwa:
-    image: ${IMAGES_PREFIX:-}app-pwa
-    environment:
-      NEXT_PUBLIC_ENTRYPOINT: http://php
-    healthcheck:
-      test: curl -f http://localhost:3000 || exit 1
-      timeout: 5s
-      retries: 5
-      start_period: 60s  
-  
   ###> doctrine/doctrine-bundle ###
   database:
-    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    image: postgres:${POSTGRES_VERSION:-18}-alpine
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-app}
       # You should definitely change the password in production
