@@ -5,6 +5,7 @@ namespace App\Processor;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Repository\UserRepository;
+use App\Resource\ClientResource;
 use App\Resource\UserResource;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -32,9 +33,8 @@ class UpdateUserProcessor implements ProcessorInterface
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $userResource = new UserResource();
-        $userResource->id = $user->getId();
-        $userResource->name = $user->getName();
+        $userResource = new UserResource()->fromModel($user);
+        $userResource->client = new ClientResource()->fromModel($user->getClient());
 
         return $userResource;
     }

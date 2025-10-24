@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Entity\User;
 use App\Processor\CreateUserProcessor;
+use App\Processor\UpdateUserDebugProcessor;
 use App\Processor\UpdateUserProcessor;
 use App\Provider\GetUserProvider;
 use Symfony\Component\Uid\AbstractUid;
@@ -17,6 +18,11 @@ use Symfony\Component\Uid\AbstractUid;
     operations: [
         new Get(),
         new Post(processor: CreateUserProcessor::class),
+        new Put(
+            '/users/debug/{id}',
+            input: ClientResource::class,
+            processor: UpdateUserDebugProcessor::class
+        ),
         new Put(processor: UpdateUserProcessor::class),
     ],
     provider: GetUserProvider::class
